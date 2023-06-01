@@ -24,7 +24,7 @@ if st.button("Analyze the Sentiment"):
 	if polarity >= 0:
 		st.success("The entered text has positive sentiments associated with it."+str(polarity))
 		rain(
-			emoji="😃",
+			emoji="😊",
 			font_size=20,  # the size of emoji
 			falling_speed=3,  # speed of raining
 			animation_length="infinite",  # for how much time the animation will happen
