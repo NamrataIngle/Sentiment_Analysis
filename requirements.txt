@@ -1,3 +1,4 @@
 pandas
 textblob
 streamlit 
+streamlit_extras
