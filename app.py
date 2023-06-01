@@ -2,6 +2,8 @@ import pandas as pd
 import streamlit as st 
 from textblob import TextBlob
 
+from streamlit_extras.let_it_rain import rain
+
 st.title('Model Deployment: Sentiment Analysis')
 text = st.text_area("Please Enter your text")
 
