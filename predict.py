@@ -7,7 +7,6 @@ import pandas as pd # data processing
 import numpy as np # linear algebra
 
 #ploting libraries
-import seaborn as sns
 import matplotlib.pyplot as plt 
 
 #feature engineering
