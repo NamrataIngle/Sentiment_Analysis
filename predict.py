@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-
 import pickle
 #libraries
 import pandas as pd # data processing
@@ -15,7 +14,7 @@ import matplotlib.pyplot as plt
 from sklearn import preprocessing
 
 # data transformation
-from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 
 
@@ -23,18 +22,18 @@ import warnings
 warnings.filterwarnings('ignore')
 
 
-from sklearn.svm import SVC
+#from sklearn.svm import SVC
 
 import pickle as pickle5
 import streamlit as st
-st.title("🍄 Mushroom Classification ")
-st.subheader("Are your mushrooms edible🙂 or poisonous☠️? Find out Now.")
+st.title("Twiter Symentic Analysis")
+message = st.text_area("Please Enter your text")
 def add_bg_from_url():
     st.markdown(
          f"""
          <style>
          .stApp {{
-             background-image: url("https://img.freepik.com/premium-photo/shitake-tasty-mushroom-isolated-white-background_188078-18051.jpg");
+             background-image: url("https://ts2.space/wp-content/uploads/2023/04/mfrack_Revolutionizing_Healthcare_with_AI_8a48a065-943a-4913-8617-e0e840c57612-1024x574.jpeg");
              background-attachment: fixed;
              background-size: cover
          }}
@@ -45,176 +44,14 @@ def add_bg_from_url():
 
 add_bg_from_url()
 
-
-# In[70]:
-
-
 # Loading data
-data=pd.read_csv('mushrooms.csv')
+data=pd.read_csv('tweet.csv')
 
+df['class'].unique()
 
-# In[71]:
+st.title("Predict for sentiment")
 
-
-# Droppping insignificant columns
-data=data.drop(['gill-attachment','ring-number','stalk-surface-below-ring','stalk-color-below-ring','veil-type','veil-color'],axis=1)
-
-
-# In[72]:
-
-
-
-# Renaming Column names
-data.rename(columns = {'cap-shape':'cap_shape','cap-surface':'cap_surface',
-                       'cap-color':'cap_color','gill-spacing':'gill_spacing',
-                       'gill-size':'gill_size','gill-color':'gill_color',
-                       'stalk-shape':'stalk_shape','stalk-root':'stalk_root',
-                       'stalk-surface-above-ring':'stalk_surface_above_ring',
-                       'stalk-color-above-ring':'stalk_color_above_ring',
-                       'ring-type':'ring_type','spore-print-color':'spore_print_color'}, inplace = True)
-
-
-# In[73]:
-
-
-
-data['cap_shape']=np.where(data['cap_shape'].isin(['x','f','k']),
-                           data['cap_shape'].str.title(),
-                           'Other_shape')
-
-
-# in cap-surface contribution of 'g=grooves'is negligible,so we can directly drop it.
-data=data[data['cap_surface'] != 'g']
-
-
-# In[38]:
-
-
-data['cap_color']=np.where(data['cap_color'].isin(['n','y','w','g','e']),
-                           data['cap_color'].str.title(),
-                           'Other_color')
-
-
-# In[39]:
-
-
-data['odor']=np.where(data['odor'].isin(['n','f','y','s','a','l']),
-                           data['odor'].str.title(),
-                           'Other')
-
-
-# In[40]:
-
-
-data['gill_color']=np.where(data['gill_color'].isin(['k','n','g','p','w','h','u','b']),
-                           data['gill_color'].str.title(),
-                           'Other_color')
-
-
-# In[41]:
-
-
-data['stalk_root']=np.where(data['stalk_root'].isin(['e','b']),
-                           data['stalk_root'].str.title(),
-                           'Other')
-
-
-# In[42]:
-
-
-data['stalk_surface_above_ring']=np.where(data['stalk_surface_above_ring'].isin(['s','k']),
-                           data['stalk_surface_above_ring'].str.title(),
-                           'Other')
-
-
-# In[43]:
-
-
-data['stalk_color_above_ring']=np.where(data['stalk_color_above_ring'].isin(['w','g','p','n','b']),
-                           data['stalk_color_above_ring'].str.title(),
-                           'Other')
-
-
-# In[44]:
-
-
-data['ring_type']=np.where(data['ring_type'].isin(['p','e','l']),
-                           data['ring_type'].str.title(),
-                           'Other')
-
-
-# In[45]:
-
-
-data['spore_print_color']=np.where(data['spore_print_color'].isin(['k','n','h','w']),
-                           data['spore_print_color'].str.title(),
-                           'Other')
-
-
-# In[46]:
-
-
-data['population']=np.where(data['population'].isin(['s','v','y']),
-                           data['population'].str.title(),
-                           'Other')
-
-
-# In[47]:
-
-
-data['habitat']=np.where(data['habitat'].isin(['g','d','p','l']),
-                           data['habitat'].str.title(),
-                           'Other')
-
-
-
-# In[74]:
-
-
-data['cap_shape']=data['cap_shape'].replace({'X':'convex','F':'flat','K':'knobbed'})
-data['cap_surface']=data['cap_surface'].replace({'s':'smooth','y':'scaly','f':'fibrous'})
-data['cap_color']=data['cap_color'].replace({'N':'brown','Y':'yellow','W':'white','G':'grey','E':'red'})
-data['bruises']=data['bruises'].replace({'t':'bruises','f':'no_bruises'})
-data['odor']=data['odor'].replace({'N':'none','F':'foul','Y':'fishy','S':'spicy','A':'almond','L':'anise'})
-data['gill_spacing']=data['gill_spacing'].replace({'c':'close','w':'crowded'})
-
-
-data['gill_size']=data['gill_size'].replace({'n':'narrow','b':'broad'})
-
-data['gill_color']=data['gill_color'].replace({'K':'black','N':'brown','G':'grey','P':'pink','W':'white','H':'chocolate','U':'purple','B':'buff'})
-
-data['stalk_shape']=data['stalk_shape'].replace({'e':'enlarging','t':'tapering'})
-
-data['stalk_root']=data['stalk_root'].replace({'E':'equal','B':'bulbous'})
-
-data['stalk_surface_above_ring']=data['stalk_surface_above_ring'].replace({'S':'smoth','K':'silky'})
-
-data['stalk_color_above_ring']=data['stalk_color_above_ring'].replace({'W':'white','G':'grey','P':'pink','N':'brown','B':'buff'})
-
-data['ring_type']=data['ring_type'].replace({'P': 'pendant','E':'evanescent','L':'large'})
-
-data['spore_print_color']=data['spore_print_color'].replace({'K':'black','N':'brown','H':'chocolate','W':'white'})
-
-data['population']=data['population'].replace({'S':'scattered','V':'several','Y':'solitary'})
-
-data['habitat']=data['habitat'].replace({'G':'grasses','D':'woods','P':'paths','L':'leaves'})
-data['class']=data['class'].replace({'p':'Poisonous','e':'Edible'})
-data.head(10)
-
-
-# In[75]:
-
-
-# In[48]:
-data['class'].unique()
-
-st.title("Predict for Mushroom type")
-
-
-# In[76]:
-
-
-m_cap_shape =st.selectbox('cap_shape', data['cap_shape'].unique())
+'''m_cap_shape =st.selectbox('cap_shape', data['cap_shape'].unique())
 
 if m_cap_shape=='convex':
     m_cap_shape=0
@@ -377,64 +214,72 @@ elif m_habitat=='paths':
 elif m_habitat=='leaves':
     m_habitat=3
 else:
-    m_habitat=4
+    m_habitat=4'''
 
 
 from sklearn.preprocessing import LabelEncoder
 lr = LabelEncoder()
-data['class']= lr.fit_transform(data['class'])
-data['cap_shape']= lr.fit_transform(data['class'])
-data['cap_surface']= lr.fit_transform(data['class'])
-data['cap_color']= lr.fit_transform(data['class'])
-data['bruises']= lr.fit_transform(data['class'])
-data['odor']= lr.fit_transform(data['class'])
-data['gill_spacing']= lr.fit_transform(data['class'])
-data['gill_size']= lr.fit_transform(data['class'])
-data['gill_color']= lr.fit_transform(data['class'])
-data['stalk_shape']= lr.fit_transform(data['class'])
-data['stalk_root']= lr.fit_transform(data['class'])
-data['stalk_surface_above_ring']= lr.fit_transform(data['stalk_surface_above_ring'])
-data['stalk_color_above_ring']= lr.fit_transform(data['stalk_color_above_ring'])
-data['ring_type']= lr.fit_transform(data['ring_type'])
-data['spore_print_color']= lr.fit_transform(data['spore_print_color'])
-data['population']= lr.fit_transform(data['population'])
-data['habitat']= lr.fit_transform(data['habitat'])
-
-
-# In[78]:
-
+df['class']= lr.fit_transform(df['class'])
+label_list = df['label'].tolist()
 
 # Dividing data into Features(X) & Target(y)
-X = data.iloc[:,1:]
+from gensim.models import Word2Vec
 
+# Tokenize the text
+tokenized_text = [text.split() for text in text_list]
 
-y=data['class']
+# Train the Word2Vec model
+model = Word2Vec(sentences=tokenized_text,vector_size=500,window=5,min_count=1,workers=4)
+
+# Function to generate the document vector by averaging word vectors
+def document_vector(model, doc):
+    doc_vector = np.zeros(model.vector_size)
+    count = 0
+    for word in doc:
+        if word in model.wv:
+            doc_vector += model.wv[word]
+            count += 1
+    if count != 0:
+        doc_vector /= count
+    return doc_vector
+
+# Generate document vector for each tweet
+text_vectors= [document_vector(model,text)for text in tokenized_text]
+
+# Convert text_vector to numpy array
+X = np.array(text_vectors)
+
+# Assuming 'labels' is a list containing the corresponding labels for each tweet
+y = np.array(label_list)
 
 # Train-Test Split 
 #Train test split will be a 70:30 ratio respectively.
 X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.3,random_state=42)
 
+from sklearn.model_selection import GridSearchCV
 
-# In[79]:
+## Creating the instance of Logistic Regression model
+log_reg = LogisticRegression(C=30.0,solver='newton-cg',multi_class='multinomial',random_state=42)
+
+## Train the model 
+log_reg.fit(X_train_lr,y_train_lr)
+
+## predict the label for test set
+y_pred_lr = log_reg.predict(X_test_lr)
 
 
-#SVM Clasification
+'''#SVM Clasification
 svm = SVC(C=1, kernel='linear')         #bydefault kernel=rbf      C=to control soft margin
 svm1=svm.fit(X_train,y_train)
-result_svm = svm1.score(X_test,y_test)
+result_svm = svm1.score(X_test,y_test)'''
 
 
-# In[81]:
-
-
-filename = 'df.pkl'
+'''filename = 'df.pkl'
 pickle.dump(svm, open(filename,'wb'))
 pickled_model=pickle.load(open('df.pkl','rb'))
 pickled_model.fit(X_train,y_train)
-pk=pickled_model.predict(X_test)
+pk=pickled_model.predict(X_test'''
 
-
-# In[82]:
 
 import streamlit as st
 if st.button('Predict'):
@@ -446,15 +291,15 @@ if st.button('Predict'):
     df1==pd.get_dummies(df1)
     predictions=pickled_model.predict(df1)
     
-    if predictions.any()==1:
-        prediction_value = 'Poisonous☠️'
+    if predictions.any()==0:
+        prediction_value = 'Figurative'
+    elif prediction.any()==1:
+        prediction_value = 'Irony'
+    elif prdiction.any()==2:
+        prediction_value = 'Regular'
     else:
-        prediction_value = 'Edible🙂'
-    
-    st.title("Mushroom type is " + str(prediction_value))
+        prediction_value = 'Sarcastic'
         
-
-
-
-
-# 
+    
+    st.title(prediction_value)
+        
