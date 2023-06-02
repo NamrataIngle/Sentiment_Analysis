@@ -1,4 +1,5 @@
 pandas
-textblob
+numpy
+sklearn
 streamlit 
-streamlit_extras
+gensim
