@@ -1,5 +1,7 @@
 pandas
 numpy
-sklearn
 streamlit 
 gensim
+matplotlib
+warnings
+sklearn
