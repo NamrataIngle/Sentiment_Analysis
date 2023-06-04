@@ -4,3 +4,4 @@ streamlit
 textblob
 tensorflow
 matplotlib
+wordcloud
