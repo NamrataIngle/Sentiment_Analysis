@@ -1,7 +1,7 @@
 from textblob import TextBlob
 import pandas as pd
 import streamlit as st
-import cleantext
+#import cleantext
 import pickle
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import nltk
 from nltk.corpus import stopwords
 from wordcloud import WordCloud
-from sklearn.feature_extraction.text import TfidfVectorizer
+#from sklearn.feature_extraction.text import TfidfVectorizer
 #vectorizer = TfidfVectorizer(max_features=200)
 
 stopwords_set = set(stopwords.words('english'))
