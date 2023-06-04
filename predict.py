@@ -3,14 +3,13 @@ import pickle
 from textblob import TextBlob
 import pandas as pd
 import cleantext
-from tensorflow.keras.preprocessing.text import Tokenizer
-from tensorflow.keras.preprocessing.sequence import pad_sequences
 import numpy as np
 import time
 import re
 from nltk.tokenize import TweetTokenizer
 import matplotlib.pyplot as plt
 import nltk
+nltk.download('all')
 from nltk.corpus import stopwords
 
 file = open('clf.pkl','rb')
