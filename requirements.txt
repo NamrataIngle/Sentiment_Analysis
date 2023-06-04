@@ -2,8 +2,5 @@ pandas
 numpy
 streamlit 
 textblob
-tensorflow
-matplotlib
-wordcloud
 cleantext
 sklearn
