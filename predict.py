@@ -1,34 +1,55 @@
+# -*- coding: utf-8 -*-
+"""
+Spyder Editor
+
+This is a temporary script file.
+"""
+
 import streamlit as st
 import pickle
-from textblob import TextBlob
+import textblob
 import pandas as pd
-'''import cleantext
-import numpy as np
+#from cleantext import clean
+#from tensorflow.keras.preprocessing.text import Tokenizer
+import time
 import re
-from nltk.tokenize import TweetTokenizer
-import matplotlib.pyplot as plt
 import nltk
-nltk.download('all')
-from nltk.corpus import stopwords'''
+from nltk.tokenize import TweetTokenizer
+from nltk.corpus import stopwords
+nltk.download('stopwords')
+#from wordcloud import WordCloud
+from sklearn.feature_extraction.text import TfidfVectorizer
 
-#file = open('clf.pkl','rb')
+file = 'clf.pkl'
 #model = pickle.load(file)
 
-#with open(filename1, 'rb') as file:
-    #clf = pickle.load(file)
+with open(file, 'rb') as file:
+    model = pickle.load(file)
 
 text = ''
 text1 = ''
-def main():
-	st.title('Sentiment Analysis')
-	
-#with st.title('Analyze Text'):
-	#text = st.text_input('Text here: ')
 
-'''if text:
+st.header('Sentiment Analysis \U0001F606')
+with st.title('Analyze Text'):
+	text = st.text_input('Text here: ')
+    
+if text:
 	text1=text
 	blob = TextBlob(text)
-	
+    
+def Analyse(text):
+    prediction = model.predict('class')
+    return prediction
+
+def display_sarcastic_remark(remark):
+    st.title(remark)
+    time.sleep(0.1)
+
+    
+
+
+#plt.figure(figsize = (20,20))
+    
 if(text1!=""):
     st.title("Cleaned Text")
     text1 = re.sub('((www.[^s]+)|(https?://[^s]+))|(http?://[^s]+)', '',text1)
@@ -36,11 +57,22 @@ if(text1!=""):
     text1=tknzr.tokenize(text1)
     text1=str(text1)
     text1=re.sub(r'[^a-zA-Z0-9\s]', '', text1)
-    text1=cleantext.clean(text1, clean_all= False, extra_spaces=True ,stopwords=True ,lowercase=True ,numbers=True , punct=True)
+    #text1=clean(text1, clean_all= False, extra_spaces=True ,stopwords=True ,lowercase=True ,numbers=True , punct=True)
     st.write(text1)
-	
-X_test = clf.transform(unseen_tweets)
+    
+with open(file, 'rb') as file:
+    model = pickle.load(file)
+unseen_tweets=[text]
+unseen_df=pd.DataFrame(unseen_tweets)
+unseen_df.columns=["Unseen"]
+
+vectorizer = TfidfVectorizer(max_features=200)
+
+stopwords_set = set(stopwords.words('english'))
+
+X_test = vectorizer.transform(unseen_tweets)
 y_pred = model.predict(X_test)
+
 
 if text!="":
     if(y_pred==0):
@@ -58,7 +90,6 @@ if text!="":
 else:
     st.write(text1)
     remark = "No Words to Analyze"
-    display_sarcastic_remark(remark)'''
+    display_sarcastic_remark(remark)
 
-if __name__ == '__main__':
-	main()
+    
