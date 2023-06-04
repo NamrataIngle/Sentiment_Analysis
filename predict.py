@@ -14,17 +14,17 @@ import nltk
 from nltk.corpus import stopwords
 from wordcloud import WordCloud
 from sklearn.feature_extraction.text import TfidfVectorizer
-vectorizer = TfidfVectorizer(max_features=200)
+#vectorizer = TfidfVectorizer(max_features=200)
 
 stopwords_set = set(stopwords.words('english'))
 
 text=""
 text1=""
-filename="sentiment_model2.pkl"
-filename1="vectorizer_model.pkl"
+#filename="sentiment_model2.pkl"
+filename1="log_reg.pkl"
 
 with open(filename1, 'rb') as file:
-    vectorizer = pickle.load(file)
+    log_reg = pickle.load(file)
 
 def display_sarcastic_remark(remark):
     st.title(remark)
