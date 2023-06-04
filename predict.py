@@ -4,7 +4,6 @@ from textblob import TextBlob
 import pandas as pd
 import cleantext
 import numpy as np
-import time
 import re
 from nltk.tokenize import TweetTokenizer
 import matplotlib.pyplot as plt
@@ -13,8 +12,10 @@ nltk.download('all')
 from nltk.corpus import stopwords
 
 file = open('clf.pkl','rb')
-model = pickle.load(file)
+#model = pickle.load(file)
 
+with open(filename1, 'rb') as file:
+    clf = pickle.load(file)
 
 text = ''
 text = ''
