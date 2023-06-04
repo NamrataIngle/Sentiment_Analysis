@@ -14,8 +14,8 @@ import nltk
 nltk.download('all')
 from nltk.corpus import stopwords
 from wordcloud import WordCloud
-#from sklearn.feature_extraction.text import TfidfVectorizer
-#vectorizer = TfidfVectorizer(max_features=200)
+from sklearn.feature_extraction.text import TfidfVectorizer
+vectorizer = TfidfVectorizer(max_features=200)
 
 stopwords_set = set(stopwords.words('english'))
 
