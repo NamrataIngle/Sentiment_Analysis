@@ -11,19 +11,19 @@ import nltk
 nltk.download('all')
 from nltk.corpus import stopwords'''
 
-file = open('clf.pkl','rb')
+#file = open('clf.pkl','rb')
 #model = pickle.load(file)
 
-with open(filename1, 'rb') as file:
-    clf = pickle.load(file)
+#with open(filename1, 'rb') as file:
+    #clf = pickle.load(file)
 
 text = ''
 text1 = ''
 def main():
 	st.title('Sentiment Analysis')
 	
-with st.title('Analyze Text'):
-	text = st.text_input('Text here: ')
+#with st.title('Analyze Text'):
+	#text = st.text_input('Text here: ')
 
 '''if text:
 	text1=text
