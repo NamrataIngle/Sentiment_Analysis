@@ -2,14 +2,14 @@ import streamlit as st
 import pickle
 from textblob import TextBlob
 import pandas as pd
-import cleantext
+'''import cleantext
 import numpy as np
 import re
 from nltk.tokenize import TweetTokenizer
 import matplotlib.pyplot as plt
 import nltk
 nltk.download('all')
-from nltk.corpus import stopwords
+from nltk.corpus import stopwords'''
 
 file = open('clf.pkl','rb')
 #model = pickle.load(file)
@@ -17,8 +17,8 @@ file = open('clf.pkl','rb')
 with open(filename1, 'rb') as file:
     clf = pickle.load(file)
 
-text = ''
-text = ''
+'''text = ''
+text1 = ''
 def main():
 	st.title('Sentiment Analysis')
 	
@@ -39,6 +39,9 @@ if(text1!=""):
     text1=cleantext.clean(text1, clean_all= False, extra_spaces=True ,stopwords=True ,lowercase=True ,numbers=True , punct=True)
     st.write(text1)
 	
+X_test = clf.transform(unseen_tweets)
+y_pred = model.predict(X_test)
+
 if text!="":
     if(y_pred==0):
         remark = "That's Figurative!😄"
@@ -55,7 +58,7 @@ if text!="":
 else:
     st.write(text1)
     remark = "No Words to Analyze"
-    display_sarcastic_remark(remark)
+    display_sarcastic_remark(remark)'''
 
 if __name__ == '__main__':
 	main()
