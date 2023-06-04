@@ -11,6 +11,7 @@ import re
 from nltk.tokenize import TweetTokenizer
 import matplotlib.pyplot as plt
 import nltk
+nltk.download('all')
 from nltk.corpus import stopwords
 from wordcloud import WordCloud
 #from sklearn.feature_extraction.text import TfidfVectorizer
