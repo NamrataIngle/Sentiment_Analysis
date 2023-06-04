@@ -14,6 +14,7 @@ import nltk
 nltk.download('all')
 from nltk.corpus import stopwords
 from wordcloud import WordCloud
+import sklearn
 from sklearn.feature_extraction.text import TfidfVectorizer
 vectorizer = TfidfVectorizer(max_features=200)
 
