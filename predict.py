@@ -17,7 +17,7 @@ file = open('clf.pkl','rb')
 with open(filename1, 'rb') as file:
     clf = pickle.load(file)
 
-'''text = ''
+text = ''
 text1 = ''
 def main():
 	st.title('Sentiment Analysis')
@@ -25,7 +25,7 @@ def main():
 with st.title('Analyze Text'):
 	text = st.text_input('Text here: ')
 
-if text:
+'''if text:
 	text1=text
 	blob = TextBlob(text)
 	
