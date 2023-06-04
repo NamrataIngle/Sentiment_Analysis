@@ -5,4 +5,5 @@ textblob
 tensorflow
 matplotlib
 wordcloud
+cleantext
 
