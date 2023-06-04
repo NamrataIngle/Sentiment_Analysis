@@ -1,47 +1,34 @@
+import streamlit as st
+import pickle
 from textblob import TextBlob
 import pandas as pd
-import streamlit as st
-#import cleantext
-import pickle
+import cleantext
 from tensorflow.keras.preprocessing.text import Tokenizer
-#from tensorflow.keras.preprocessing.sequence import pad_sequences
+from tensorflow.keras.preprocessing.sequence import pad_sequences
 import numpy as np
 import time
 import re
 from nltk.tokenize import TweetTokenizer
 import matplotlib.pyplot as plt
 import nltk
-nltk.download('all')
 from nltk.corpus import stopwords
-from wordcloud import WordCloud
-import sklearn
-from sklearn.feature_extraction.text import TfidfVectorizer
-vectorizer = TfidfVectorizer(max_features=200)
 
-stopwords_set = set(stopwords.words('english'))
+file = open('clf.pkl','rb')
+model = pickle.load(file)
 
-text=""
-text1=""
-#filename="sentiment_model2.pkl"
-filename1="log_reg.pkl"
 
-with open(filename1, 'rb') as file:
-    log_reg = pickle.load(file)
-
-def display_sarcastic_remark(remark):
-    st.title(remark)
-    time.sleep(0.1)
-
-st.header('Sentiment Analysis')
+text = ''
+text = ''
+def main():
+	st.title('Sentiment Analysis')
+	
 with st.title('Analyze Text'):
 	text = st.text_input('Text here: ')
+
 if text:
 	text1=text
 	blob = TextBlob(text)
-#st.write('Polarity: ', round(blob.sentiment.polarity,2))
-#st.write('Subjectivity: ', round(blob.sentiment.subjectivity,2))
-plt.figure(figsize = (20,20))
-
+	
 if(text1!=""):
     st.title("Cleaned Text")
     text1 = re.sub('((www.[^s]+)|(https?://[^s]+))|(http?://[^s]+)', '',text1)
@@ -51,16 +38,7 @@ if(text1!=""):
     text1=re.sub(r'[^a-zA-Z0-9\s]', '', text1)
     text1=cleantext.clean(text1, clean_all= False, extra_spaces=True ,stopwords=True ,lowercase=True ,numbers=True , punct=True)
     st.write(text1)
-
-with open(filename, 'rb') as file:
-    model = pickle.load(file)
-unseen_tweets=[text]
-unseen_df=pd.DataFrame(unseen_tweets)
-unseen_df.columns=["Unseen"]
-
-X_test = vectorizer.transform(unseen_tweets)
-y_pred = model.predict(X_test)
-
+	
 if text!="":
     if(y_pred==0):
         remark = "That's Figurative!😄"
@@ -78,3 +56,6 @@ else:
     st.write(text1)
     remark = "No Words to Analyze"
     display_sarcastic_remark(remark)
+
+if __name__ == '__main__':
+	main()
